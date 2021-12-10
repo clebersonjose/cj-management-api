@@ -1,2 +1,2 @@
-# cj-management-api
-CJ Andrade's CMS API
+# CJ Andrade's CMS API
+CMS for CJ Andrade's blog.
