@@ -1,7 +1,8 @@
 {
     "env": {
         "browser": true,
-        "es2021": true
+        "es2021": true,
+        "jest/globals": true
     },
     "extends": [
         "airbnb-base"
@@ -12,9 +13,18 @@
         "sourceType": "module"
     },
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "jest"
     ],
     "rules": {
+        "max-lines-per-function": [
+            "error",
+            25
+        ],
+        "max-params": [
+            "error",
+            3
+        ],
         "import/extensions": [
             "error",
             "ignorePackages",

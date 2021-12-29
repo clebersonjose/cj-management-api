@@ -12,6 +12,12 @@
           "enable": true
         }
       }
+    },
+    {
+      "name": "esdoc-typescript-plugin",
+      "option": {
+        "enable": true
+      }
     }
   ]
 }

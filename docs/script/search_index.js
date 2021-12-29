@@ -1,5 +1,23 @@
 window.esdocSearchIndex = [
   [
+    "cj-management-api/src/models/user.ts~user",
+    "class/src/models/user.ts~User.html",
+    "<span>User</span> <span class=\"search-result-import-path\">cj-management-api/src/models/user.ts</span>",
+    "class"
+  ],
+  [
+    "cj-management-api/src/controllers/createuser.ts~createuser",
+    "function/index.html#static-function-createUser",
+    "<span>createUser</span> <span class=\"search-result-import-path\">cj-management-api/src/controllers/createUser.ts</span>",
+    "function"
+  ],
+  [
+    "cj-management-api/src/helpers/logger.ts~logconfiguration",
+    "variable/index.html#static-variable-logConfiguration",
+    "<span>logConfiguration</span> <span class=\"search-result-import-path\">cj-management-api/src/helpers/logger.ts</span>",
+    "variable"
+  ],
+  [
     "src/.external-ecmascript.js~array",
     "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
     "src/.external-ecmascript.js~Array",
@@ -280,5 +298,65 @@ window.esdocSearchIndex = [
     "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
     "src/.external-ecmascript.js~undefined",
     "external"
+  ],
+  [
+    "src/controllers/createuser.ts",
+    "file/src/controllers/createUser.ts.html",
+    "src/controllers/createUser.ts",
+    "file"
+  ],
+  [
+    "src/helpers/logger.ts",
+    "file/src/helpers/logger.ts.html",
+    "src/helpers/logger.ts",
+    "file"
+  ],
+  [
+    "src/index.ts",
+    "file/src/index.ts.html",
+    "src/index.ts",
+    "file"
+  ],
+  [
+    "src/models/user.ts",
+    "file/src/models/user.ts.html",
+    "src/models/user.ts",
+    "file"
+  ],
+  [
+    "src/models/user.ts~user.createuser",
+    "class/src/models/user.ts~User.html#static-method-createUser",
+    "src/models/user.ts~User.createUser",
+    "method"
+  ],
+  [
+    "src/models/user.ts~user.hashedpassword",
+    "class/src/models/user.ts~User.html#static-method-hashedPassword",
+    "src/models/user.ts~User.hashedPassword",
+    "method"
+  ],
+  [
+    "src/models/user.ts~user.validateemail",
+    "class/src/models/user.ts~User.html#static-method-validateEmail",
+    "src/models/user.ts~User.validateEmail",
+    "method"
+  ],
+  [
+    "src/models/user.ts~user.validatename",
+    "class/src/models/user.ts~User.html#static-method-validateName",
+    "src/models/user.ts~User.validateName",
+    "method"
+  ],
+  [
+    "src/models/user.ts~user.validatepassword",
+    "class/src/models/user.ts~User.html#static-method-validatePassword",
+    "src/models/user.ts~User.validatePassword",
+    "method"
+  ],
+  [
+    "src/routes.ts",
+    "file/src/routes.ts.html",
+    "src/routes.ts",
+    "file"
   ]
 ]

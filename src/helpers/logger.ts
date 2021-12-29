@@ -1,5 +1,9 @@
 import winston from 'winston';
 
+/**
+ * @desc Configuration for winston logger.
+ */
+
 const logConfiguration = {
   transports: [
     new winston.transports.File({
@@ -14,11 +18,19 @@ const logConfiguration = {
     new winston.transports.File({
       level: 'warn',
       filename: 'logs/warn.log',
+      format: winston.format.combine(
+        winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+        winston.format.json(),
+      ),
     }),
 
     new winston.transports.File({
       level: 'error',
-      filename: 'logs/errors.log',
+      filename: 'logs/error.log',
+      format: winston.format.combine(
+        winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+        winston.format.json(),
+      ),
     }),
   ],
 };

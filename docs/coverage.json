@@ -1,6 +1,39 @@
 {
-  "coverage": "0%",
-  "expectCount": 0,
-  "actualCount": 0,
-  "files": {}
+  "coverage": "66.66%",
+  "expectCount": 12,
+  "actualCount": 8,
+  "files": {
+    "src/controllers/createUser.ts": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/helpers/logger.ts": {
+      "expectCount": 2,
+      "actualCount": 1,
+      "undocumentLines": [
+        24
+      ]
+    },
+    "src/index.ts": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        4,
+        5
+      ]
+    },
+    "src/models/user.ts": {
+      "expectCount": 6,
+      "actualCount": 6,
+      "undocumentLines": []
+    },
+    "src/routes.ts": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        3
+      ]
+    }
+  }
 }

@@ -564,6 +564,518 @@
     "builtinExternal": true
   },
   {
+    "__docId__": 48,
+    "kind": "file",
+    "name": "src/controllers/createUser.ts",
+    "content": "import { Request, Response } from 'express';\nimport User from '../models/user';\n\n/**\n * @access public\n * @desc Controller for create a new user.\n * @param  {Request} request The request object.\n * @param  {Response} response The response object.\n * @returns {Promise<void>} Promise that resolves to void.\n */\nconst createUser = async (request: Request, response: Response): Promise<void> => {\n  const { name, email, password }: {name: string, email: string, password: string} = request.body;\n  const newUser: string = await User.createUser(name, email, password);\n\n  response.send(newUser);\n};\n\nexport default createUser;\n",
+    "static": true,
+    "longname": "/home/cleberson/Documentos/Workspace/0-EmAndamento/cj-management-api/src/controllers/createUser.ts",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 49,
+    "kind": "function",
+    "name": "createUser",
+    "memberof": "src/controllers/createUser.ts",
+    "generator": false,
+    "async": true,
+    "static": true,
+    "longname": "src/controllers/createUser.ts~createUser",
+    "access": "public",
+    "export": true,
+    "importPath": "cj-management-api/src/controllers/createUser.ts",
+    "importStyle": "createUser",
+    "description": "Controller for create a new user.",
+    "lineNumber": 9,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Promise<void>} Promise that resolves to void."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Request"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "request",
+        "description": "The request object."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Response"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "response",
+        "description": "The response object."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise<void>"
+      ],
+      "spread": false,
+      "description": "Promise that resolves to void."
+    }
+  },
+  {
+    "__docId__": 50,
+    "kind": "file",
+    "name": "src/helpers/logger.ts",
+    "content": "import winston from 'winston';\n\n/**\n * @desc Configuration for winston logger.\n */\n\nconst logConfiguration = {\n  transports: [\n    new winston.transports.File({\n      level: 'info',\n      filename: 'logs/info.log',\n      format: winston.format.combine(\n        winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),\n        winston.format.json(),\n      ),\n    }),\n\n    new winston.transports.File({\n      level: 'warn',\n      filename: 'logs/warn.log',\n      format: winston.format.combine(\n        winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),\n        winston.format.json(),\n      ),\n    }),\n\n    new winston.transports.File({\n      level: 'error',\n      filename: 'logs/error.log',\n      format: winston.format.combine(\n        winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),\n        winston.format.json(),\n      ),\n    }),\n  ],\n};\n\nconst logger = winston.createLogger(logConfiguration);\n\nexport default logger;\n",
+    "static": true,
+    "longname": "/home/cleberson/Documentos/Workspace/0-EmAndamento/cj-management-api/src/helpers/logger.ts",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 51,
+    "kind": "variable",
+    "name": "logConfiguration",
+    "memberof": "src/helpers/logger.ts",
+    "static": true,
+    "longname": "src/helpers/logger.ts~logConfiguration",
+    "access": "public",
+    "export": false,
+    "importPath": "cj-management-api/src/helpers/logger.ts",
+    "importStyle": null,
+    "description": "Configuration for winston logger.",
+    "lineNumber": 5,
+    "type": {
+      "types": [
+        "{\"transports\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 52,
+    "kind": "variable",
+    "name": "logger",
+    "memberof": "src/helpers/logger.ts",
+    "static": true,
+    "longname": "src/helpers/logger.ts~logger",
+    "access": "public",
+    "export": true,
+    "importPath": "cj-management-api/src/helpers/logger.ts",
+    "importStyle": "logger",
+    "description": null,
+    "lineNumber": 24,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 53,
+    "kind": "file",
+    "name": "src/index.ts",
+    "content": "import express from 'express';\nimport routes from './routes';\nimport logger from './helpers/logger';\n\nconst app = express();\nconst PORT = 8000;\n\napp.use(express.json());\napp.use(routes);\napp.listen(PORT, () => {\n  console.log(`Server is running at http://localhost:${PORT}`);\n  logger.info(`Server is running at http://localhost:${PORT}`);\n});\n",
+    "static": true,
+    "longname": "/home/cleberson/Documentos/Workspace/0-EmAndamento/cj-management-api/src/index.ts",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 54,
+    "kind": "variable",
+    "name": "app",
+    "memberof": "src/index.ts",
+    "static": true,
+    "longname": "src/index.ts~app",
+    "access": "public",
+    "export": false,
+    "importPath": "cj-management-api/src/index.ts",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 4,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 55,
+    "kind": "variable",
+    "name": "PORT",
+    "memberof": "src/index.ts",
+    "static": true,
+    "longname": "src/index.ts~PORT",
+    "access": "public",
+    "export": false,
+    "importPath": "cj-management-api/src/index.ts",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 5,
+    "undocument": true,
+    "type": {
+      "types": [
+        "number"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 56,
+    "kind": "file",
+    "name": "src/models/user.ts",
+    "content": "import { PrismaClient } from '@prisma/client';\nimport bcrypt from 'bcrypt';\nimport logger from '../helpers/logger';\n\n/**\n * @desc Class representing a user.\n */\nclass User {\n  /**\n   * @access public\n   * @desc Create a new user.\n   * @param  {string} name The user's name.\n   * @param  {string} email The user's email.\n   * @param  {string} password The user's password.\n   * @returns {JSON} Promise that resolves to JSON with user's full name and email.\n   */\n  static async createUser(name: string, email: string, password: string): Promise<string> {\n    try {\n      const validateName = await this.validateName(name);\n      const validateEmail = await this.validateEmail(email);\n      const validatePassword = await this.validatePassword(password);\n      const hashedPassword = await this.hashedPassword(validatePassword);\n\n      const prisma = new PrismaClient();\n      const user = await prisma.user.create({\n        data: {\n          name: validateName,\n          email: validateEmail,\n          password: hashedPassword,\n          createdAt: new Date(),\n        },\n      });\n\n      logger.info(`User ${user.id} has been created`);\n      return JSON.stringify({ name: user.name, email: user.email });\n    } catch (error: any) {\n      logger.error(error.message);\n      return JSON.stringify({ error: error.message });\n    }\n  }\n\n  /**\n   * @access private\n   * @desc Validate user's full name.\n   * @param  {string} name The user's full name.\n   * @returns {string} The validated user's full name.\n   * @throws {Error} If the user's full name is empty or null.\n   * @throws {Error} If the user's full name length is less than 4 characters.\n   */\n  private static async validateName(name: string): Promise<string> {\n    const validateName = String(name);\n\n    if (validateName === '' || validateName === null || validateName === undefined) {\n      throw new Error('Name is required');\n    }\n\n    if (validateName.length <= 3) {\n      throw new Error('Name must be at least 4 characters');\n    }\n\n    return validateName;\n  }\n\n  /**\n   * @access private\n   * @desc Validate user's email.\n   * @param  {string} email The user's email.\n   * @returns {string} The validated user's email.\n   * @throws {Error} If the user's email is empty or null.\n   * @throws {Error} If the user's email is not a valid email.\n   * @throws {Error} If the user's email is already in use.\n   */\n  private static async validateEmail(email: string): Promise<string> {\n    const validateEmail = String(email).toLowerCase();\n\n    if (validateEmail === '' || validateEmail === null || validateEmail === undefined) {\n      throw new Error('Email is required');\n    }\n\n    const matcher = (/^(([^<>()[\\]\\\\.,;:\\s@\"]+(\\.[^<>()[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$/);\n    if (!validateEmail.match(matcher)) {\n      throw new Error('Email format is invalid');\n    }\n\n    const prisma = new PrismaClient();\n    const findEmail = await prisma.user.findUnique({\n      where: {\n        email: validateEmail,\n      },\n    });\n\n    if (findEmail !== null) {\n      throw new Error('Email already exists');\n    }\n\n    return validateEmail;\n  }\n\n  /**\n   * @access private\n   * @desc Validate user's password.\n   * @param  {string} password The user's password.\n   * @returns {string} The validated user's password.\n   * @throws {Error} If the user's password is empty or null.\n   * @throws {Error} If the user's password not contains at least one uppercase letter.\n   * @throws {Error} If the user's password not contains at least one lowercase letter.\n   * @throws {Error} If the user's password not contains at least one number.\n   * @throws {Error} If the user's password not contains at least one special character.\n   * @throws {Error} If the user's password not be between 8 and 24 characters.\n   */\n  private static async validatePassword(password: string): Promise<string> {\n    const validatePassword = String(password);\n\n    if (validatePassword === '' || validatePassword === null || validatePassword === undefined) { throw new Error('Password is required'); }\n\n    if (!validatePassword.match(/(?=.*[A-Z])/)) { throw new Error('Password must contain at least one uppercase letter'); }\n\n    if (!validatePassword.match(/^(?=.*[a-z])/)) { throw new Error('Password must contain at least one lowercase letter'); }\n\n    if (!validatePassword.match(/^(?=.*[0-9])/)) { throw new Error('Password must contain at least one number'); }\n\n    if (!validatePassword.match('([`~\\\\!@#\\\\$%\\\\^\\\\&\\\\*\\\\(\\\\)\\\\-_\\\\=\\\\+\\\\[\\\\\\\\{\\\\}\\\\]\\\\\\\\\\\\|;:\\\\\\'\",<.>\\\\/\\\\?€£¥₹§±].*)')) { throw new Error('Password must contain at least one special character'); }\n\n    if (!validatePassword.match(/^(?=.{8,24})/)) { throw new Error('Password must be between 8 and 24 characters'); }\n\n    return validatePassword;\n  }\n\n  /**\n   * @access private\n   * @desc Hash user's password.\n   * @param  {string} password The user's password.\n   * @returns {string} The hashed user's password.\n   */\n  private static async hashedPassword(password: string): Promise<string> {\n    const salt = await bcrypt.genSalt(12);\n    const hashedPassword = await bcrypt.hash(password, salt);\n\n    return hashedPassword;\n  }\n}\n\nexport default User;\n",
+    "static": true,
+    "longname": "/home/cleberson/Documentos/Workspace/0-EmAndamento/cj-management-api/src/models/user.ts",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 57,
+    "kind": "class",
+    "name": "User",
+    "memberof": "src/models/user.ts",
+    "static": true,
+    "longname": "src/models/user.ts~User",
+    "access": "public",
+    "export": true,
+    "importPath": "cj-management-api/src/models/user.ts",
+    "importStyle": "User",
+    "description": "Class representing a user.",
+    "lineNumber": 13,
+    "interface": false
+  },
+  {
+    "__docId__": 58,
+    "kind": "method",
+    "name": "createUser",
+    "memberof": "src/models/user.ts~User",
+    "generator": false,
+    "async": true,
+    "static": true,
+    "longname": "src/models/user.ts~User.createUser",
+    "access": "public",
+    "description": "Create a new user.",
+    "lineNumber": 36,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{JSON} Promise that resolves to JSON with user's full name and email."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "The user's name."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "email",
+        "description": "The user's email."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "password",
+        "description": "The user's password."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "JSON"
+      ],
+      "spread": false,
+      "description": "Promise that resolves to JSON with user's full name and email."
+    }
+  },
+  {
+    "__docId__": 59,
+    "kind": "method",
+    "name": "validateName",
+    "memberof": "src/models/user.ts~User",
+    "generator": false,
+    "async": true,
+    "static": true,
+    "longname": "src/models/user.ts~User.validateName",
+    "access": "private",
+    "description": "Validate user's full name.",
+    "lineNumber": 77,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} The validated user's full name."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "The user's full name."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "The validated user's full name."
+    },
+    "throws": [
+      {
+        "types": [
+          "Error"
+        ],
+        "description": "If the user's full name is empty or null."
+      },
+      {
+        "types": [
+          "Error"
+        ],
+        "description": "If the user's full name length is less than 4 characters."
+      }
+    ]
+  },
+  {
+    "__docId__": 60,
+    "kind": "method",
+    "name": "validateEmail",
+    "memberof": "src/models/user.ts~User",
+    "generator": false,
+    "async": true,
+    "static": true,
+    "longname": "src/models/user.ts~User.validateEmail",
+    "access": "private",
+    "description": "Validate user's email.",
+    "lineNumber": 106,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} The validated user's email."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "email",
+        "description": "The user's email."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "The validated user's email."
+    },
+    "throws": [
+      {
+        "types": [
+          "Error"
+        ],
+        "description": "If the user's email is empty or null."
+      },
+      {
+        "types": [
+          "Error"
+        ],
+        "description": "If the user's email is not a valid email."
+      },
+      {
+        "types": [
+          "Error"
+        ],
+        "description": "If the user's email is already in use."
+      }
+    ]
+  },
+  {
+    "__docId__": 61,
+    "kind": "method",
+    "name": "validatePassword",
+    "memberof": "src/models/user.ts~User",
+    "generator": false,
+    "async": true,
+    "static": true,
+    "longname": "src/models/user.ts~User.validatePassword",
+    "access": "private",
+    "description": "Validate user's password.",
+    "lineNumber": 148,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} The validated user's password."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "password",
+        "description": "The user's password."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "The validated user's password."
+    },
+    "throws": [
+      {
+        "types": [
+          "Error"
+        ],
+        "description": "If the user's password is empty or null."
+      },
+      {
+        "types": [
+          "Error"
+        ],
+        "description": "If the user's password not contains at least one uppercase letter."
+      },
+      {
+        "types": [
+          "Error"
+        ],
+        "description": "If the user's password not contains at least one lowercase letter."
+      },
+      {
+        "types": [
+          "Error"
+        ],
+        "description": "If the user's password not contains at least one number."
+      },
+      {
+        "types": [
+          "Error"
+        ],
+        "description": "If the user's password not contains at least one special character."
+      },
+      {
+        "types": [
+          "Error"
+        ],
+        "description": "If the user's password not be between 8 and 24 characters."
+      }
+    ]
+  },
+  {
+    "__docId__": 62,
+    "kind": "method",
+    "name": "hashedPassword",
+    "memberof": "src/models/user.ts~User",
+    "generator": false,
+    "async": true,
+    "static": true,
+    "longname": "src/models/user.ts~User.hashedPassword",
+    "access": "private",
+    "description": "Hash user's password.",
+    "lineNumber": 186,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} The hashed user's password."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "password",
+        "description": "The user's password."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "The hashed user's password."
+    }
+  },
+  {
+    "__docId__": 63,
+    "kind": "file",
+    "name": "src/routes.ts",
+    "content": "import { Router } from 'express';\nimport createUser from './controllers/createUser';\n\nconst routes = Router();\n\nroutes.get('/', (request, response) => response.send('CJ Andrade Management API'));\nroutes.post('/create-user', createUser);\n\nexport default routes;\n",
+    "static": true,
+    "longname": "/home/cleberson/Documentos/Workspace/0-EmAndamento/cj-management-api/src/routes.ts",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 64,
+    "kind": "variable",
+    "name": "routes",
+    "memberof": "src/routes.ts",
+    "static": true,
+    "longname": "src/routes.ts~routes",
+    "access": "public",
+    "export": true,
+    "importPath": "cj-management-api/src/routes.ts",
+    "importStyle": "routes",
+    "description": null,
+    "lineNumber": 3,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
     "kind": "index",
     "content": "# CJ Andrade's CMS API\nCMS for CJ Andrade's blog.\n",
     "longname": "/home/cleberson/Documentos/Workspace/0-EmAndamento/cj-management-api/README.md",
@@ -573,7 +1085,7 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n  \"name\": \"cj-management-api\",\n  \"version\": \"1.0.0\",\n  \"description\": \"CMS for CJ Andrade's blog.\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\",\n    \"start\": \"nodemon src/index.ts\",\n    \"build\": \"tsc --project ./\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/clebersonjose/cj-management-api.git\"\n  },\n  \"keywords\": [],\n  \"author\": \"\",\n  \"license\": \"ISC\",\n  \"bugs\": {\n    \"url\": \"https://github.com/clebersonjose/cj-management-api/issues\"\n  },\n  \"homepage\": \"https://github.com/clebersonjose/cj-management-api#readme\",\n  \"dependencies\": {\n    \"@prisma/client\": \"^3.7.0\",\n    \"express\": \"^4.17.1\"\n  },\n  \"devDependencies\": {\n    \"@types/express\": \"^4.17.13\",\n    \"@types/node\": \"^16.11.12\",\n    \"@typescript-eslint/eslint-plugin\": \"^5.6.0\",\n    \"@typescript-eslint/parser\": \"^5.6.0\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^7.32.0\",\n    \"eslint-config-airbnb-base\": \"^15.0.0\",\n    \"eslint-import-resolver-typescript\": \"^2.5.0\",\n    \"eslint-plugin-import\": \"^2.25.3\",\n    \"nodemon\": \"^2.0.15\",\n    \"prisma\": \"^3.7.0\",\n    \"ts-node\": \"^10.4.0\",\n    \"typescript\": \"^4.5.3\"\n  }\n}\n",
+    "content": "{\n  \"name\": \"cj-management-api\",\n  \"version\": \"1.0.0\",\n  \"description\": \"CMS for CJ Andrade's blog.\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"test\": \"jest\",\n    \"start\": \"nodemon src/index.ts\",\n    \"build\": \"tsc --project ./\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/clebersonjose/cj-management-api.git\"\n  },\n  \"keywords\": [],\n  \"author\": \"\",\n  \"license\": \"ISC\",\n  \"bugs\": {\n    \"url\": \"https://github.com/clebersonjose/cj-management-api/issues\"\n  },\n  \"homepage\": \"https://github.com/clebersonjose/cj-management-api#readme\",\n  \"dependencies\": {\n    \"@prisma/client\": \"^3.7.0\",\n    \"bcrypt\": \"^5.0.1\",\n    \"express\": \"^4.17.1\",\n    \"winston\": \"^3.3.3\"\n  },\n  \"devDependencies\": {\n    \"@types/bcrypt\": \"^5.0.0\",\n    \"@types/express\": \"^4.17.13\",\n    \"@types/jest\": \"^27.0.3\",\n    \"@types/node\": \"^16.11.12\",\n    \"@typescript-eslint/eslint-plugin\": \"^5.6.0\",\n    \"@typescript-eslint/parser\": \"^5.6.0\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"esdoc-typescript-plugin\": \"^1.0.1\",\n    \"eslint\": \"^7.32.0\",\n    \"eslint-config-airbnb-base\": \"^15.0.0\",\n    \"eslint-import-resolver-typescript\": \"^2.5.0\",\n    \"eslint-plugin-import\": \"^2.25.3\",\n    \"jest\": \"^27.4.5\",\n    \"nodemon\": \"^2.0.15\",\n    \"prisma\": \"^3.7.0\",\n    \"ts-jest\": \"^27.1.2\",\n    \"ts-node\": \"^10.4.0\",\n    \"typescript\": \"^4.5.3\"\n  }\n}\n",
     "longname": "/home/cleberson/Documentos/Workspace/0-EmAndamento/cj-management-api/package.json",
     "name": "package.json",
     "static": true,
