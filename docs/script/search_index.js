@@ -12,6 +12,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "cj-management-api/src/controllers/getuserbyemail.ts~getuserbyemail",
+    "function/index.html#static-function-getUserByEmail",
+    "<span>getUserByEmail</span> <span class=\"search-result-import-path\">cj-management-api/src/controllers/getUserByEmail.ts</span>",
+    "function"
+  ],
+  [
     "cj-management-api/src/helpers/logger.ts~logconfiguration",
     "variable/index.html#static-variable-logConfiguration",
     "<span>logConfiguration</span> <span class=\"search-result-import-path\">cj-management-api/src/helpers/logger.ts</span>",
@@ -306,6 +312,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/controllers/getuserbyemail.ts",
+    "file/src/controllers/getUserByEmail.ts.html",
+    "src/controllers/getUserByEmail.ts",
+    "file"
+  ],
+  [
     "src/helpers/logger.ts",
     "file/src/helpers/logger.ts.html",
     "src/helpers/logger.ts",
@@ -324,9 +336,21 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/models/user.ts~user.checkifemailexists",
+    "class/src/models/user.ts~User.html#static-method-checkIfEmailExists",
+    "src/models/user.ts~User.checkIfEmailExists",
+    "method"
+  ],
+  [
     "src/models/user.ts~user.createuser",
     "class/src/models/user.ts~User.html#static-method-createUser",
     "src/models/user.ts~User.createUser",
+    "method"
+  ],
+  [
+    "src/models/user.ts~user.getuserbyemail",
+    "class/src/models/user.ts~User.html#static-method-getUserByEmail",
+    "src/models/user.ts~User.getUserByEmail",
     "method"
   ],
   [

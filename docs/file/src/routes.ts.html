@@ -30,6 +30,7 @@
   <ul>
     
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#controllers">controllers</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createUser">createUser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getUserByEmail">getUserByEmail</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#helpers">helpers</a><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-logConfiguration">logConfiguration</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#models">models</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/models/user.ts~User.html">User</a></span></span></li>
 </ul>
@@ -39,11 +40,12 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/routes.ts</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { Router } from &apos;express&apos;;
 import createUser from &apos;./controllers/createUser&apos;;
+import getUserByEmail from &apos;./controllers/getUserByEmail&apos;;
 
 const routes = Router();
 
-routes.get(&apos;/&apos;, (request, response) =&gt; response.send(&apos;CJ Andrade Management API&apos;));
 routes.post(&apos;/create-user&apos;, createUser);
+routes.post(&apos;/get-user-by-email&apos;, getUserByEmail);
 
 export default routes;
 </code></pre>

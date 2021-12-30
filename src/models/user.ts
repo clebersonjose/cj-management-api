@@ -3,26 +3,40 @@ import bcrypt from 'bcrypt';
 import logger from '../helpers/logger';
 
 /**
+ * @class User
+ * @access public
  * @desc Class representing a user.
  */
 class User {
+  private static dataBaseConection = new PrismaClient();
+
   /**
    * @access public
    * @desc Create a new user.
-   * @param  {string} name The user's name.
+   * @param  {string} name The user's full name.
    * @param  {string} email The user's email.
-   * @param  {string} password The user's password.
+   * @param  {string} password The user's password.   * 
    * @returns {JSON} Promise that resolves to JSON with user's full name and email.
+   * @property {string} name The user's full name.
+   * @property {string} email The user's email.   * 
+   * @throws {Error} If the user's email is already in use.
+   * @throws {Error} If the database connection or transaction fails.
    */
-  static async createUser(name: string, email: string, password: string): Promise<string> {
+  public static async createUser(name: string, email: string, password: string): Promise<string> {
     try {
       const validateName = await this.validateName(name);
       const validateEmail = await this.validateEmail(email);
+      const checkIfEmailExists = await this.checkIfEmailExists(validateEmail);
+
+      if (checkIfEmailExists !== 0) {
+        throw new Error('Email already exists');
+      }
+      
       const validatePassword = await this.validatePassword(password);
       const hashedPassword = await this.hashedPassword(validatePassword);
 
-      const prisma = new PrismaClient();
-      const user = await prisma.user.create({
+      
+      const user = await this.dataBaseConection.user.create({
         data: {
           name: validateName,
           email: validateEmail,
@@ -35,7 +49,39 @@ class User {
       return JSON.stringify({ name: user.name, email: user.email });
     } catch (error: any) {
       logger.error(error.message);
-      return JSON.stringify({ error: error.message });
+      throw new Error(error.message);
+    }
+  }
+
+  /**
+   * @access public
+   * @desc Get user by email.
+   * @param  {string} email The user's email.   * 
+   * @returns {JSON} Promise that resolves to JSON with user's id, full name, email and role.
+   * @property {number} id The user's id.
+   * @property {string} name The user's full name.
+   * @property {string} email The user's email.
+   * @property {string} role The user's role.   * 
+   * @throws {Error} If the user not found.
+   */
+  public static async getUserByEmail(email: string): Promise<string> {
+    try {
+      const validateEmail = await this.validateEmail(email);
+      const user: any = await this.dataBaseConection.user.findUnique({
+        where: {
+          email: validateEmail,
+        },
+      });
+
+      if (user === null) {
+        throw new Error('User not found');
+      }
+
+      logger.info(`Get user ${user.id} by email`);
+      return JSON.stringify({ id: user.id, name: user.name, email: user.email, role: user.role });
+    } catch (error: any) {
+      logger.error(error.message);
+      throw new Error(error.message);
     }
   }
 
@@ -68,7 +114,6 @@ class User {
    * @returns {string} The validated user's email.
    * @throws {Error} If the user's email is empty or null.
    * @throws {Error} If the user's email is not a valid email.
-   * @throws {Error} If the user's email is already in use.
    */
   private static async validateEmail(email: string): Promise<string> {
     const validateEmail = String(email).toLowerCase();
@@ -82,18 +127,24 @@ class User {
       throw new Error('Email format is invalid');
     }
 
-    const prisma = new PrismaClient();
-    const findEmail = await prisma.user.findUnique({
+    return validateEmail;
+  }
+
+  /**
+   * @access private
+   * @desc Check if user's email is already in use.
+   * @param  {string} email The user's email.
+   * @returns {Promise<number>} The number of users with the same email.
+   */
+  private static async checkIfEmailExists(email: string): Promise<number> {
+    
+    const findEmail = await this.dataBaseConection.user.count({
       where: {
-        email: validateEmail,
+        email: email,
       },
     });
 
-    if (findEmail !== null) {
-      throw new Error('Email already exists');
-    }
-
-    return validateEmail;
+    return findEmail;
   }
 
   /**

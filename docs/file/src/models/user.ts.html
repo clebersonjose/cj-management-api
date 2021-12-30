@@ -30,6 +30,7 @@
   <ul>
     
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#controllers">controllers</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createUser">createUser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getUserByEmail">getUserByEmail</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#helpers">helpers</a><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-logConfiguration">logConfiguration</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#models">models</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/models/user.ts~User.html">User</a></span></span></li>
 </ul>
@@ -42,26 +43,40 @@ import bcrypt from &apos;bcrypt&apos;;
 import logger from &apos;../helpers/logger&apos;;
 
 /**
+ * @class User
+ * @access public
  * @desc Class representing a user.
  */
 class User {
+  private static dataBaseConection = new PrismaClient();
+
   /**
    * @access public
    * @desc Create a new user.
-   * @param  {string} name The user&apos;s name.
+   * @param  {string} name The user&apos;s full name.
    * @param  {string} email The user&apos;s email.
-   * @param  {string} password The user&apos;s password.
+   * @param  {string} password The user&apos;s password.   * 
    * @returns {JSON} Promise that resolves to JSON with user&apos;s full name and email.
+   * @property {string} name The user&apos;s full name.
+   * @property {string} email The user&apos;s email.   * 
+   * @throws {Error} If the user&apos;s email is already in use.
+   * @throws {Error} If the database connection or transaction fails.
    */
-  static async createUser(name: string, email: string, password: string): Promise&lt;string&gt; {
+  public static async createUser(name: string, email: string, password: string): Promise&lt;string&gt; {
     try {
       const validateName = await this.validateName(name);
       const validateEmail = await this.validateEmail(email);
+      const checkIfEmailExists = await this.checkIfEmailExists(validateEmail);
+
+      if (checkIfEmailExists !== 0) {
+        throw new Error(&apos;Email already exists&apos;);
+      }
+      
       const validatePassword = await this.validatePassword(password);
       const hashedPassword = await this.hashedPassword(validatePassword);
 
-      const prisma = new PrismaClient();
-      const user = await prisma.user.create({
+      
+      const user = await this.dataBaseConection.user.create({
         data: {
           name: validateName,
           email: validateEmail,
@@ -74,7 +89,39 @@ class User {
       return JSON.stringify({ name: user.name, email: user.email });
     } catch (error: any) {
       logger.error(error.message);
-      return JSON.stringify({ error: error.message });
+      throw new Error(error.message);
+    }
+  }
+
+  /**
+   * @access public
+   * @desc Get user by email.
+   * @param  {string} email The user&apos;s email.   * 
+   * @returns {JSON} Promise that resolves to JSON with user&apos;s id, full name, email and role.
+   * @property {number} id The user&apos;s id.
+   * @property {string} name The user&apos;s full name.
+   * @property {string} email The user&apos;s email.
+   * @property {string} role The user&apos;s role.   * 
+   * @throws {Error} If the user not found.
+   */
+  public static async getUserByEmail(email: string): Promise&lt;string&gt; {
+    try {
+      const validateEmail = await this.validateEmail(email);
+      const user: any = await this.dataBaseConection.user.findUnique({
+        where: {
+          email: validateEmail,
+        },
+      });
+
+      if (user === null) {
+        throw new Error(&apos;User not found&apos;);
+      }
+
+      logger.info(`Get user ${user.id} by email`);
+      return JSON.stringify({ id: user.id, name: user.name, email: user.email, role: user.role });
+    } catch (error: any) {
+      logger.error(error.message);
+      throw new Error(error.message);
     }
   }
 
@@ -107,7 +154,6 @@ class User {
    * @returns {string} The validated user&apos;s email.
    * @throws {Error} If the user&apos;s email is empty or null.
    * @throws {Error} If the user&apos;s email is not a valid email.
-   * @throws {Error} If the user&apos;s email is already in use.
    */
   private static async validateEmail(email: string): Promise&lt;string&gt; {
     const validateEmail = String(email).toLowerCase();
@@ -121,18 +167,24 @@ class User {
       throw new Error(&apos;Email format is invalid&apos;);
     }
 
-    const prisma = new PrismaClient();
-    const findEmail = await prisma.user.findUnique({
+    return validateEmail;
+  }
+
+  /**
+   * @access private
+   * @desc Check if user&apos;s email is already in use.
+   * @param  {string} email The user&apos;s email.
+   * @returns {Promise&lt;number&gt;} The number of users with the same email.
+   */
+  private static async checkIfEmailExists(email: string): Promise&lt;number&gt; {
+    
+    const findEmail = await this.dataBaseConection.user.count({
       where: {
-        email: validateEmail,
+        email: email,
       },
     });
 
-    if (findEmail !== null) {
-      throw new Error(&apos;Email already exists&apos;);
-    }
-
-    return validateEmail;
+    return findEmail;
   }
 
   /**
@@ -160,7 +212,7 @@ class User {
 
     if (!validatePassword.match(&apos;([`~\\!@#\\$%\\^\\&amp;\\*\\(\\)\\-_\\=\\+\\[\\\\{\\}\\]\\\\\\|;:\\\&apos;&quot;,&lt;.&gt;\\/\\?&#x20AC;&#xA3;&#xA5;&#x20B9;&#xA7;&#xB1;].*)&apos;)) { throw new Error(&apos;Password must contain at least one special character&apos;); }
 
-    if (!validatePassword.match(/^(?=.{8,24})/)) { throw new Error(&apos;Password must be between 8 and 24 characters&apos;); }
+    if (validatePassword.length &lt; 8 || validatePassword.length &gt; 24) { throw new Error(&apos;Password must be between 8 and 24 characters&apos;); }
 
     return validatePassword;
   }

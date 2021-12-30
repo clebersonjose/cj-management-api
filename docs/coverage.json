@@ -1,9 +1,14 @@
 {
-  "coverage": "66.66%",
-  "expectCount": 12,
-  "actualCount": 8,
+  "coverage": "73.33%",
+  "expectCount": 15,
+  "actualCount": 11,
   "files": {
     "src/controllers/createUser.ts": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/controllers/getUserByEmail.ts": {
       "expectCount": 1,
       "actualCount": 1,
       "undocumentLines": []
@@ -24,15 +29,15 @@
       ]
     },
     "src/models/user.ts": {
-      "expectCount": 6,
-      "actualCount": 6,
+      "expectCount": 8,
+      "actualCount": 8,
       "undocumentLines": []
     },
     "src/routes.ts": {
       "expectCount": 1,
       "actualCount": 0,
       "undocumentLines": [
-        3
+        4
       ]
     }
   }

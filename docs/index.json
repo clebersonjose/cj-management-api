@@ -567,7 +567,7 @@
     "__docId__": 48,
     "kind": "file",
     "name": "src/controllers/createUser.ts",
-    "content": "import { Request, Response } from 'express';\nimport User from '../models/user';\n\n/**\n * @access public\n * @desc Controller for create a new user.\n * @param  {Request} request The request object.\n * @param  {Response} response The response object.\n * @returns {Promise<void>} Promise that resolves to void.\n */\nconst createUser = async (request: Request, response: Response): Promise<void> => {\n  const { name, email, password }: {name: string, email: string, password: string} = request.body;\n  const newUser: string = await User.createUser(name, email, password);\n\n  response.send(newUser);\n};\n\nexport default createUser;\n",
+    "content": "import { Request, Response } from 'express';\nimport User from '../models/user';\n\n/**\n * @access public\n * @desc Controller for create a new user.\n * @param {Request} request The request object.\n * @param {JSON} request.body The request's body.\n * @param {string} request.body.name The user's name.\n * @param {string} request.body.email The user's email.\n * @param {string} request.body.password The user's password.\n * @param  {Response} response The response object.\n * @returns {Promise<void>} Promise that resolves to void.\n */\nconst createUser = async (request: Request, response: Response): Promise<void> => {\n  try {\n    const { name, email, password }: {name: string, email: string, password: string} = request.body;\n    const newUser: string = await User.createUser(name, email, password);\n  \n    response.status(201).send(newUser);\n  } catch (error: any) {\n    response.status(400).send({'error': error.message});\n  }\n};\n\nexport default createUser;\n",
     "static": true,
     "longname": "/home/cleberson/Documentos/Workspace/0-EmAndamento/cj-management-api/src/controllers/createUser.ts",
     "access": "public",
@@ -588,7 +588,7 @@
     "importPath": "cj-management-api/src/controllers/createUser.ts",
     "importStyle": "createUser",
     "description": "Controller for create a new user.",
-    "lineNumber": 9,
+    "lineNumber": 13,
     "unknown": [
       {
         "tagName": "@returns",
@@ -605,6 +605,46 @@
         "optional": false,
         "name": "request",
         "description": "The request object."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "JSON"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "request.body",
+        "description": "The request's body."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "request.body.name",
+        "description": "The user's name."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "request.body.email",
+        "description": "The user's email."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "request.body.password",
+        "description": "The user's password."
       },
       {
         "nullable": null,
@@ -629,6 +669,89 @@
   {
     "__docId__": 50,
     "kind": "file",
+    "name": "src/controllers/getUserByEmail.ts",
+    "content": "import { Request, Response } from 'express';\nimport User from '../models/user';\n\n/**\n * @access public\n * @desc Controller for get a user by email.\n * @param {Request} request The request object.\n * @param {JSON} request.body The request's body.\n * @param {string} request.body.email The user's email.\n * @param  {Response} response The response object.\n * @returns {Promise<void>} Promise that resolves to void.\n */\nconst getUserByEmail = async (request: Request, response: Response) => {\n  try {\n    const { email }: {email: string} = request.body;\n    const user: string = await User.getUserByEmail(email);\n\n    response.status(200).send(user);\n  } catch (error: any) {\n    response.status(400).send({'error': error.message});\n  }\n}\n\nexport default getUserByEmail;",
+    "static": true,
+    "longname": "/home/cleberson/Documentos/Workspace/0-EmAndamento/cj-management-api/src/controllers/getUserByEmail.ts",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 51,
+    "kind": "function",
+    "name": "getUserByEmail",
+    "memberof": "src/controllers/getUserByEmail.ts",
+    "generator": false,
+    "async": true,
+    "static": true,
+    "longname": "src/controllers/getUserByEmail.ts~getUserByEmail",
+    "access": "public",
+    "export": true,
+    "importPath": "cj-management-api/src/controllers/getUserByEmail.ts",
+    "importStyle": "getUserByEmail",
+    "description": "Controller for get a user by email.",
+    "lineNumber": 11,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Promise<void>} Promise that resolves to void."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Request"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "request",
+        "description": "The request object."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "JSON"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "request.body",
+        "description": "The request's body."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "request.body.email",
+        "description": "The user's email."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Response"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "response",
+        "description": "The response object."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise<void>"
+      ],
+      "spread": false,
+      "description": "Promise that resolves to void."
+    }
+  },
+  {
+    "__docId__": 52,
+    "kind": "file",
     "name": "src/helpers/logger.ts",
     "content": "import winston from 'winston';\n\n/**\n * @desc Configuration for winston logger.\n */\n\nconst logConfiguration = {\n  transports: [\n    new winston.transports.File({\n      level: 'info',\n      filename: 'logs/info.log',\n      format: winston.format.combine(\n        winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),\n        winston.format.json(),\n      ),\n    }),\n\n    new winston.transports.File({\n      level: 'warn',\n      filename: 'logs/warn.log',\n      format: winston.format.combine(\n        winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),\n        winston.format.json(),\n      ),\n    }),\n\n    new winston.transports.File({\n      level: 'error',\n      filename: 'logs/error.log',\n      format: winston.format.combine(\n        winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),\n        winston.format.json(),\n      ),\n    }),\n  ],\n};\n\nconst logger = winston.createLogger(logConfiguration);\n\nexport default logger;\n",
     "static": true,
@@ -638,7 +761,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 51,
+    "__docId__": 53,
     "kind": "variable",
     "name": "logConfiguration",
     "memberof": "src/helpers/logger.ts",
@@ -657,7 +780,7 @@
     }
   },
   {
-    "__docId__": 52,
+    "__docId__": 54,
     "kind": "variable",
     "name": "logger",
     "memberof": "src/helpers/logger.ts",
@@ -678,7 +801,7 @@
     "ignore": true
   },
   {
-    "__docId__": 53,
+    "__docId__": 55,
     "kind": "file",
     "name": "src/index.ts",
     "content": "import express from 'express';\nimport routes from './routes';\nimport logger from './helpers/logger';\n\nconst app = express();\nconst PORT = 8000;\n\napp.use(express.json());\napp.use(routes);\napp.listen(PORT, () => {\n  console.log(`Server is running at http://localhost:${PORT}`);\n  logger.info(`Server is running at http://localhost:${PORT}`);\n});\n",
@@ -689,7 +812,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 54,
+    "__docId__": 56,
     "kind": "variable",
     "name": "app",
     "memberof": "src/index.ts",
@@ -710,7 +833,7 @@
     "ignore": true
   },
   {
-    "__docId__": 55,
+    "__docId__": 57,
     "kind": "variable",
     "name": "PORT",
     "memberof": "src/index.ts",
@@ -731,10 +854,10 @@
     "ignore": true
   },
   {
-    "__docId__": 56,
+    "__docId__": 58,
     "kind": "file",
     "name": "src/models/user.ts",
-    "content": "import { PrismaClient } from '@prisma/client';\nimport bcrypt from 'bcrypt';\nimport logger from '../helpers/logger';\n\n/**\n * @desc Class representing a user.\n */\nclass User {\n  /**\n   * @access public\n   * @desc Create a new user.\n   * @param  {string} name The user's name.\n   * @param  {string} email The user's email.\n   * @param  {string} password The user's password.\n   * @returns {JSON} Promise that resolves to JSON with user's full name and email.\n   */\n  static async createUser(name: string, email: string, password: string): Promise<string> {\n    try {\n      const validateName = await this.validateName(name);\n      const validateEmail = await this.validateEmail(email);\n      const validatePassword = await this.validatePassword(password);\n      const hashedPassword = await this.hashedPassword(validatePassword);\n\n      const prisma = new PrismaClient();\n      const user = await prisma.user.create({\n        data: {\n          name: validateName,\n          email: validateEmail,\n          password: hashedPassword,\n          createdAt: new Date(),\n        },\n      });\n\n      logger.info(`User ${user.id} has been created`);\n      return JSON.stringify({ name: user.name, email: user.email });\n    } catch (error: any) {\n      logger.error(error.message);\n      return JSON.stringify({ error: error.message });\n    }\n  }\n\n  /**\n   * @access private\n   * @desc Validate user's full name.\n   * @param  {string} name The user's full name.\n   * @returns {string} The validated user's full name.\n   * @throws {Error} If the user's full name is empty or null.\n   * @throws {Error} If the user's full name length is less than 4 characters.\n   */\n  private static async validateName(name: string): Promise<string> {\n    const validateName = String(name);\n\n    if (validateName === '' || validateName === null || validateName === undefined) {\n      throw new Error('Name is required');\n    }\n\n    if (validateName.length <= 3) {\n      throw new Error('Name must be at least 4 characters');\n    }\n\n    return validateName;\n  }\n\n  /**\n   * @access private\n   * @desc Validate user's email.\n   * @param  {string} email The user's email.\n   * @returns {string} The validated user's email.\n   * @throws {Error} If the user's email is empty or null.\n   * @throws {Error} If the user's email is not a valid email.\n   * @throws {Error} If the user's email is already in use.\n   */\n  private static async validateEmail(email: string): Promise<string> {\n    const validateEmail = String(email).toLowerCase();\n\n    if (validateEmail === '' || validateEmail === null || validateEmail === undefined) {\n      throw new Error('Email is required');\n    }\n\n    const matcher = (/^(([^<>()[\\]\\\\.,;:\\s@\"]+(\\.[^<>()[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$/);\n    if (!validateEmail.match(matcher)) {\n      throw new Error('Email format is invalid');\n    }\n\n    const prisma = new PrismaClient();\n    const findEmail = await prisma.user.findUnique({\n      where: {\n        email: validateEmail,\n      },\n    });\n\n    if (findEmail !== null) {\n      throw new Error('Email already exists');\n    }\n\n    return validateEmail;\n  }\n\n  /**\n   * @access private\n   * @desc Validate user's password.\n   * @param  {string} password The user's password.\n   * @returns {string} The validated user's password.\n   * @throws {Error} If the user's password is empty or null.\n   * @throws {Error} If the user's password not contains at least one uppercase letter.\n   * @throws {Error} If the user's password not contains at least one lowercase letter.\n   * @throws {Error} If the user's password not contains at least one number.\n   * @throws {Error} If the user's password not contains at least one special character.\n   * @throws {Error} If the user's password not be between 8 and 24 characters.\n   */\n  private static async validatePassword(password: string): Promise<string> {\n    const validatePassword = String(password);\n\n    if (validatePassword === '' || validatePassword === null || validatePassword === undefined) { throw new Error('Password is required'); }\n\n    if (!validatePassword.match(/(?=.*[A-Z])/)) { throw new Error('Password must contain at least one uppercase letter'); }\n\n    if (!validatePassword.match(/^(?=.*[a-z])/)) { throw new Error('Password must contain at least one lowercase letter'); }\n\n    if (!validatePassword.match(/^(?=.*[0-9])/)) { throw new Error('Password must contain at least one number'); }\n\n    if (!validatePassword.match('([`~\\\\!@#\\\\$%\\\\^\\\\&\\\\*\\\\(\\\\)\\\\-_\\\\=\\\\+\\\\[\\\\\\\\{\\\\}\\\\]\\\\\\\\\\\\|;:\\\\\\'\",<.>\\\\/\\\\?€£¥₹§±].*)')) { throw new Error('Password must contain at least one special character'); }\n\n    if (!validatePassword.match(/^(?=.{8,24})/)) { throw new Error('Password must be between 8 and 24 characters'); }\n\n    return validatePassword;\n  }\n\n  /**\n   * @access private\n   * @desc Hash user's password.\n   * @param  {string} password The user's password.\n   * @returns {string} The hashed user's password.\n   */\n  private static async hashedPassword(password: string): Promise<string> {\n    const salt = await bcrypt.genSalt(12);\n    const hashedPassword = await bcrypt.hash(password, salt);\n\n    return hashedPassword;\n  }\n}\n\nexport default User;\n",
+    "content": "import { PrismaClient } from '@prisma/client';\nimport bcrypt from 'bcrypt';\nimport logger from '../helpers/logger';\n\n/**\n * @class User\n * @access public\n * @desc Class representing a user.\n */\nclass User {\n  private static dataBaseConection = new PrismaClient();\n\n  /**\n   * @access public\n   * @desc Create a new user.\n   * @param  {string} name The user's full name.\n   * @param  {string} email The user's email.\n   * @param  {string} password The user's password.   * \n   * @returns {JSON} Promise that resolves to JSON with user's full name and email.\n   * @property {string} name The user's full name.\n   * @property {string} email The user's email.   * \n   * @throws {Error} If the user's email is already in use.\n   * @throws {Error} If the database connection or transaction fails.\n   */\n  public static async createUser(name: string, email: string, password: string): Promise<string> {\n    try {\n      const validateName = await this.validateName(name);\n      const validateEmail = await this.validateEmail(email);\n      const checkIfEmailExists = await this.checkIfEmailExists(validateEmail);\n\n      if (checkIfEmailExists !== 0) {\n        throw new Error('Email already exists');\n      }\n      \n      const validatePassword = await this.validatePassword(password);\n      const hashedPassword = await this.hashedPassword(validatePassword);\n\n      \n      const user = await this.dataBaseConection.user.create({\n        data: {\n          name: validateName,\n          email: validateEmail,\n          password: hashedPassword,\n          createdAt: new Date(),\n        },\n      });\n\n      logger.info(`User ${user.id} has been created`);\n      return JSON.stringify({ name: user.name, email: user.email });\n    } catch (error: any) {\n      logger.error(error.message);\n      throw new Error(error.message);\n    }\n  }\n\n  /**\n   * @access public\n   * @desc Get user by email.\n   * @param  {string} email The user's email.   * \n   * @returns {JSON} Promise that resolves to JSON with user's id, full name, email and role.\n   * @property {number} id The user's id.\n   * @property {string} name The user's full name.\n   * @property {string} email The user's email.\n   * @property {string} role The user's role.   * \n   * @throws {Error} If the user not found.\n   */\n  public static async getUserByEmail(email: string): Promise<string> {\n    try {\n      const validateEmail = await this.validateEmail(email);\n      const user: any = await this.dataBaseConection.user.findUnique({\n        where: {\n          email: validateEmail,\n        },\n      });\n\n      if (user === null) {\n        throw new Error('User not found');\n      }\n\n      logger.info(`Get user ${user.id} by email`);\n      return JSON.stringify({ id: user.id, name: user.name, email: user.email, role: user.role });\n    } catch (error: any) {\n      logger.error(error.message);\n      throw new Error(error.message);\n    }\n  }\n\n  /**\n   * @access private\n   * @desc Validate user's full name.\n   * @param  {string} name The user's full name.\n   * @returns {string} The validated user's full name.\n   * @throws {Error} If the user's full name is empty or null.\n   * @throws {Error} If the user's full name length is less than 4 characters.\n   */\n  private static async validateName(name: string): Promise<string> {\n    const validateName = String(name);\n\n    if (validateName === '' || validateName === null || validateName === undefined) {\n      throw new Error('Name is required');\n    }\n\n    if (validateName.length <= 3) {\n      throw new Error('Name must be at least 4 characters');\n    }\n\n    return validateName;\n  }\n\n  /**\n   * @access private\n   * @desc Validate user's email.\n   * @param  {string} email The user's email.\n   * @returns {string} The validated user's email.\n   * @throws {Error} If the user's email is empty or null.\n   * @throws {Error} If the user's email is not a valid email.\n   */\n  private static async validateEmail(email: string): Promise<string> {\n    const validateEmail = String(email).toLowerCase();\n\n    if (validateEmail === '' || validateEmail === null || validateEmail === undefined) {\n      throw new Error('Email is required');\n    }\n\n    const matcher = (/^(([^<>()[\\]\\\\.,;:\\s@\"]+(\\.[^<>()[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$/);\n    if (!validateEmail.match(matcher)) {\n      throw new Error('Email format is invalid');\n    }\n\n    return validateEmail;\n  }\n\n  /**\n   * @access private\n   * @desc Check if user's email is already in use.\n   * @param  {string} email The user's email.\n   * @returns {Promise<number>} The number of users with the same email.\n   */\n  private static async checkIfEmailExists(email: string): Promise<number> {\n    \n    const findEmail = await this.dataBaseConection.user.count({\n      where: {\n        email: email,\n      },\n    });\n\n    return findEmail;\n  }\n\n  /**\n   * @access private\n   * @desc Validate user's password.\n   * @param  {string} password The user's password.\n   * @returns {string} The validated user's password.\n   * @throws {Error} If the user's password is empty or null.\n   * @throws {Error} If the user's password not contains at least one uppercase letter.\n   * @throws {Error} If the user's password not contains at least one lowercase letter.\n   * @throws {Error} If the user's password not contains at least one number.\n   * @throws {Error} If the user's password not contains at least one special character.\n   * @throws {Error} If the user's password not be between 8 and 24 characters.\n   */\n  private static async validatePassword(password: string): Promise<string> {\n    const validatePassword = String(password);\n\n    if (validatePassword === '' || validatePassword === null || validatePassword === undefined) { throw new Error('Password is required'); }\n\n    if (!validatePassword.match(/(?=.*[A-Z])/)) { throw new Error('Password must contain at least one uppercase letter'); }\n\n    if (!validatePassword.match(/^(?=.*[a-z])/)) { throw new Error('Password must contain at least one lowercase letter'); }\n\n    if (!validatePassword.match(/^(?=.*[0-9])/)) { throw new Error('Password must contain at least one number'); }\n\n    if (!validatePassword.match('([`~\\\\!@#\\\\$%\\\\^\\\\&\\\\*\\\\(\\\\)\\\\-_\\\\=\\\\+\\\\[\\\\\\\\{\\\\}\\\\]\\\\\\\\\\\\|;:\\\\\\'\",<.>\\\\/\\\\?€£¥₹§±].*)')) { throw new Error('Password must contain at least one special character'); }\n\n    if (validatePassword.length < 8 || validatePassword.length > 24) { throw new Error('Password must be between 8 and 24 characters'); }\n\n    return validatePassword;\n  }\n\n  /**\n   * @access private\n   * @desc Hash user's password.\n   * @param  {string} password The user's password.\n   * @returns {string} The hashed user's password.\n   */\n  private static async hashedPassword(password: string): Promise<string> {\n    const salt = await bcrypt.genSalt(12);\n    const hashedPassword = await bcrypt.hash(password, salt);\n\n    return hashedPassword;\n  }\n}\n\nexport default User;\n",
     "static": true,
     "longname": "/home/cleberson/Documentos/Workspace/0-EmAndamento/cj-management-api/src/models/user.ts",
     "access": "public",
@@ -742,7 +865,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 57,
+    "__docId__": 59,
     "kind": "class",
     "name": "User",
     "memberof": "src/models/user.ts",
@@ -753,11 +876,17 @@
     "importPath": "cj-management-api/src/models/user.ts",
     "importStyle": "User",
     "description": "Class representing a user.",
-    "lineNumber": 13,
+    "lineNumber": 15,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": "User"
+      }
+    ],
     "interface": false
   },
   {
-    "__docId__": 58,
+    "__docId__": 60,
     "kind": "method",
     "name": "createUser",
     "memberof": "src/models/user.ts~User",
@@ -767,7 +896,7 @@
     "longname": "src/models/user.ts~User.createUser",
     "access": "public",
     "description": "Create a new user.",
-    "lineNumber": 36,
+    "lineNumber": 42,
     "unknown": [
       {
         "tagName": "@returns",
@@ -783,7 +912,7 @@
         "spread": false,
         "optional": false,
         "name": "name",
-        "description": "The user's name."
+        "description": "The user's full name."
       },
       {
         "nullable": null,
@@ -803,7 +932,29 @@
         "spread": false,
         "optional": false,
         "name": "password",
-        "description": "The user's password."
+        "description": "The user's password.   *"
+      }
+    ],
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "The user's full name."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "email",
+        "description": "The user's email.   *"
       }
     ],
     "return": {
@@ -813,10 +964,113 @@
       ],
       "spread": false,
       "description": "Promise that resolves to JSON with user's full name and email."
-    }
+    },
+    "throws": [
+      {
+        "types": [
+          "Error"
+        ],
+        "description": "If the user's email is already in use."
+      },
+      {
+        "types": [
+          "Error"
+        ],
+        "description": "If the database connection or transaction fails."
+      }
+    ]
   },
   {
-    "__docId__": 59,
+    "__docId__": 61,
+    "kind": "method",
+    "name": "getUserByEmail",
+    "memberof": "src/models/user.ts~User",
+    "generator": false,
+    "async": true,
+    "static": true,
+    "longname": "src/models/user.ts~User.getUserByEmail",
+    "access": "public",
+    "description": "Get user by email.",
+    "lineNumber": 89,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{JSON} Promise that resolves to JSON with user's id, full name, email and role."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "email",
+        "description": "The user's email.   *"
+      }
+    ],
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "id",
+        "description": "The user's id."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "The user's full name."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "email",
+        "description": "The user's email."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "role",
+        "description": "The user's role.   *"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "JSON"
+      ],
+      "spread": false,
+      "description": "Promise that resolves to JSON with user's id, full name, email and role."
+    },
+    "throws": [
+      {
+        "types": [
+          "Error"
+        ],
+        "description": "If the user not found."
+      }
+    ]
+  },
+  {
+    "__docId__": 62,
     "kind": "method",
     "name": "validateName",
     "memberof": "src/models/user.ts~User",
@@ -826,7 +1080,7 @@
     "longname": "src/models/user.ts~User.validateName",
     "access": "private",
     "description": "Validate user's full name.",
-    "lineNumber": 77,
+    "lineNumber": 126,
     "unknown": [
       {
         "tagName": "@returns",
@@ -869,7 +1123,7 @@
     ]
   },
   {
-    "__docId__": 60,
+    "__docId__": 63,
     "kind": "method",
     "name": "validateEmail",
     "memberof": "src/models/user.ts~User",
@@ -879,7 +1133,7 @@
     "longname": "src/models/user.ts~User.validateEmail",
     "access": "private",
     "description": "Validate user's email.",
-    "lineNumber": 106,
+    "lineNumber": 154,
     "unknown": [
       {
         "tagName": "@returns",
@@ -918,17 +1172,50 @@
           "Error"
         ],
         "description": "If the user's email is not a valid email."
-      },
-      {
-        "types": [
-          "Error"
-        ],
-        "description": "If the user's email is already in use."
       }
     ]
   },
   {
-    "__docId__": 61,
+    "__docId__": 64,
+    "kind": "method",
+    "name": "checkIfEmailExists",
+    "memberof": "src/models/user.ts~User",
+    "generator": false,
+    "async": true,
+    "static": true,
+    "longname": "src/models/user.ts~User.checkIfEmailExists",
+    "access": "private",
+    "description": "Check if user's email is already in use.",
+    "lineNumber": 181,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Promise<number>} The number of users with the same email."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "email",
+        "description": "The user's email."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise<number>"
+      ],
+      "spread": false,
+      "description": "The number of users with the same email."
+    }
+  },
+  {
+    "__docId__": 65,
     "kind": "method",
     "name": "validatePassword",
     "memberof": "src/models/user.ts~User",
@@ -938,7 +1225,7 @@
     "longname": "src/models/user.ts~User.validatePassword",
     "access": "private",
     "description": "Validate user's password.",
-    "lineNumber": 148,
+    "lineNumber": 211,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1005,7 +1292,7 @@
     ]
   },
   {
-    "__docId__": 62,
+    "__docId__": 66,
     "kind": "method",
     "name": "hashedPassword",
     "memberof": "src/models/user.ts~User",
@@ -1015,7 +1302,7 @@
     "longname": "src/models/user.ts~User.hashedPassword",
     "access": "private",
     "description": "Hash user's password.",
-    "lineNumber": 186,
+    "lineNumber": 249,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1044,10 +1331,10 @@
     }
   },
   {
-    "__docId__": 63,
+    "__docId__": 67,
     "kind": "file",
     "name": "src/routes.ts",
-    "content": "import { Router } from 'express';\nimport createUser from './controllers/createUser';\n\nconst routes = Router();\n\nroutes.get('/', (request, response) => response.send('CJ Andrade Management API'));\nroutes.post('/create-user', createUser);\n\nexport default routes;\n",
+    "content": "import { Router } from 'express';\nimport createUser from './controllers/createUser';\nimport getUserByEmail from './controllers/getUserByEmail';\n\nconst routes = Router();\n\nroutes.post('/create-user', createUser);\nroutes.post('/get-user-by-email', getUserByEmail);\n\nexport default routes;\n",
     "static": true,
     "longname": "/home/cleberson/Documentos/Workspace/0-EmAndamento/cj-management-api/src/routes.ts",
     "access": "public",
@@ -1055,7 +1342,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 64,
+    "__docId__": 68,
     "kind": "variable",
     "name": "routes",
     "memberof": "src/routes.ts",
@@ -1066,7 +1353,7 @@
     "importPath": "cj-management-api/src/routes.ts",
     "importStyle": "routes",
     "description": null,
-    "lineNumber": 3,
+    "lineNumber": 4,
     "undocument": true,
     "type": {
       "types": [

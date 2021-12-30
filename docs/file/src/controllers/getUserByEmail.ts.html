@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/helpers/logger.ts | cj-management-api</title>
+  <title data-ice="title">src/controllers/getUserByEmail.ts | cj-management-api</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -37,48 +37,31 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/helpers/logger.ts</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import winston from &apos;winston&apos;;
+<div class="content" data-ice="content"><h1 data-ice="title">src/controllers/getUserByEmail.ts</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { Request, Response } from &apos;express&apos;;
+import User from &apos;../models/user&apos;;
 
 /**
- * @desc Configuration for winston logger.
+ * @access public
+ * @desc Controller for get a user by email.
+ * @param {Request} request The request object.
+ * @param {JSON} request.body The request&apos;s body.
+ * @param {string} request.body.email The user&apos;s email.
+ * @param  {Response} response The response object.
+ * @returns {Promise&lt;void&gt;} Promise that resolves to void.
  */
+const getUserByEmail = async (request: Request, response: Response) =&gt; {
+  try {
+    const { email }: {email: string} = request.body;
+    const user: string = await User.getUserByEmail(email);
 
-const logConfiguration = {
-  transports: [
-    new winston.transports.File({
-      level: &apos;info&apos;,
-      filename: &apos;logs/info.log&apos;,
-      format: winston.format.combine(
-        winston.format.timestamp({ format: &apos;YYYY-MM-DD HH:mm:ss&apos; }),
-        winston.format.json(),
-      ),
-    }),
+    response.status(200).send(user);
+  } catch (error: any) {
+    response.status(400).send({&apos;error&apos;: error.message});
+  }
+}
 
-    new winston.transports.File({
-      level: &apos;warn&apos;,
-      filename: &apos;logs/warn.log&apos;,
-      format: winston.format.combine(
-        winston.format.timestamp({ format: &apos;YYYY-MM-DD HH:mm:ss&apos; }),
-        winston.format.json(),
-      ),
-    }),
-
-    new winston.transports.File({
-      level: &apos;error&apos;,
-      filename: &apos;logs/error.log&apos;,
-      format: winston.format.combine(
-        winston.format.timestamp({ format: &apos;YYYY-MM-DD HH:mm:ss&apos; }),
-        winston.format.json(),
-      ),
-    }),
-  ],
-};
-
-const logger = winston.createLogger(logConfiguration);
-
-export default logger;
-</code></pre>
+export default getUserByEmail;</code></pre>
 
 </div>
 
