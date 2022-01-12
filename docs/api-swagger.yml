@@ -1,0 +1,115 @@
+openapi: 3.0.1
+info:
+  title: CJ Management API
+  description: CJ Andrade's CMS API.
+  version: 0.0.1
+  termsOfService: https://github.com/clebersonjose/cj-management-api/blob/main/LICENSE
+  contact:
+    name: Dev's support
+    email: clebersonjosea@gmail.com
+    url: https://cjandrade.com.br
+  license:
+    name: "MIT License"
+    url: https://github.com/clebersonjose/cj-management-api/blob/main/LICENSE
+servers:
+  - url: http://localhost:8000/
+    description: Local host
+paths:
+  /create-user:
+    post:
+      summary: Create a new user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: User's full name
+                email:
+                  type: string
+                  description: User's email
+                password:
+                  type: string
+                  description: User's password
+      responses:
+        201:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  email:
+                    type: string
+  /especialidades:
+    get:
+      security:
+        - auth: []
+      summary: Recupera todas as especialidades
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Especialidades"
+    post:
+      summary: Cria nova especialidade
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                descricao:
+                  type: string
+      responses:
+        201:
+          description: "Sucesso"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Especialidade"
+  /especialidades/{id}:
+    parameters:
+      - name: id
+        in: path
+        schema:
+          type: integer
+        required: true
+    get:
+      summary: Recupera uma entidade pelo ID
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Especialidade"
+        404:
+          description: Especialidade não encontrada
+          content:
+            application/json:
+              example: "Not Found"
+components:
+  schemas:
+    Especialidade:
+      type: object
+      properties:
+        id:
+          type: integer
+        descricao:
+          type: string
+    Especialidades:
+      type: array
+      items:
+        $ref: "#/components/schemas/Especialidade"
+  securitySchemes:
+    auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
